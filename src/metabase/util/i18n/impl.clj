@@ -6,6 +6,7 @@
             [clojure.tools.logging :as log]
             [clojure.tools.reader.edn :as edn]
             [metabase.plugins.classloader :as classloader]
+            [metabase.util :as u]
             [metabase.util.i18n.plural :as i18n.plural]
             [potemkin.types :as p.types])
   (:import java.text.MessageFormat
@@ -27,9 +28,9 @@
   {:pre [((some-fn nil? string?) s)]}
   (when (string? s)
     (when-let [[_ language country] (re-matches #"^(\w{2})(?:[-_](\w{2}))?$" s)]
-      (let [language (str/lower-case language)]
+      (let [language (u/lower-case-en language)]
         (if country
-          (str language \_ (some-> country str/upper-case))
+          (str language \_ (some-> country u/upper-case-en))
           language)))))
 
 (extend-protocol CoerceToLocale

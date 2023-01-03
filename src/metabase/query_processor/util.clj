@@ -6,6 +6,7 @@
             [clojure.string :as str]
             [medley.core :as m]
             [metabase.driver :as driver]
+            [metabase.util :as u]
             [metabase.util.schema :as su]
             [schema.core :as s]))
 
@@ -60,7 +61,7 @@
   keyword."
   [token :- su/KeywordOrString]
   (-> (name token)
-      str/lower-case
+      u/lower-case-en
       (str/replace #"_" "-")
       keyword))
 

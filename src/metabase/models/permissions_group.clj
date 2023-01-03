@@ -7,8 +7,7 @@
   them; they are created automatically. You can, however, set permissions for them.
 
   See documentation in [[metabase.models.permissions]] for more information about the Metabase permissions system."
-  (:require [clojure.string :as str]
-            [honeysql.helpers :as hh]
+  (:require [honeysql.helpers :as hh]
             [metabase.db.connection :as mdb.connection]
             [metabase.models.setting :as setting]
             [metabase.plugins.classloader :as classloader]
@@ -58,7 +57,7 @@
   ^Boolean [group-name]
   {:pre [((some-fn keyword? string?) group-name)]}
   (db/exists? PermissionsGroup
-    :%lower.name (str/lower-case (name group-name))))
+    :%lower.name (u/lower-case-en (name group-name))))
 
 (defn- check-name-not-already-taken
   [group-name]

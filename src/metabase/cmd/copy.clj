@@ -3,7 +3,6 @@
   here supports loading data from an application database to any empty application database for all combinations of
   supported application database types."
   (:require [clojure.java.jdbc :as jdbc]
-            [clojure.string :as str]
             [clojure.tools.logging :as log]
             [honeysql.format :as hformat]
             [metabase.db.connection :as mdb.connection]
@@ -164,7 +163,7 @@
 (defn- copy-data! [^javax.sql.DataSource source-data-source target-db-type target-db-conn-spec]
   (with-open [source-conn (.getConnection source-data-source)]
     (doseq [{table-name :table, :as entity} entities
-            :let                            [fragment (table-select-fragments (str/lower-case (name table-name)))
+            :let                            [fragment (table-select-fragments (u/lower-case-en (name table-name)))
                                              sql      (str "SELECT * FROM "
                                                            (name table-name)
                                                            (when fragment (str " " fragment)))

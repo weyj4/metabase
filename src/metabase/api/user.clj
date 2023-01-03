@@ -1,7 +1,6 @@
 (ns metabase.api.user
   "/api/user endpoints"
-  (:require [clojure.string :as str]
-            [compojure.core :refer [DELETE GET POST PUT]]
+  (:require [compojure.core :refer [DELETE GET POST PUT]]
             [honeysql.helpers :as hh]
             [java-time :as t]
             [metabase.analytics.snowplow :as snowplow]
@@ -94,7 +93,7 @@
       "active"      [:= :is_active true]
       [:= :is_active true])))
 
-(defn- wildcard-query [query] (str "%" (str/lower-case query) "%"))
+(defn- wildcard-query [query] (str "%" (u/lower-case-en query) "%"))
 
 (defn- query-clause
   "Honeysql clause to shove into user query if there's a query"

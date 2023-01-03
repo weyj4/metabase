@@ -1,6 +1,11 @@
 {:config-paths ["macros"]
  :linters
- {:unresolved-symbol
+ {:discouraged-var 
+  {
+   clojure.string/lower-case {:message "Use u/lower-case-en instead"} 
+   clojure.string/upper-case {:message "Use u/upper-case-en instead"}
+   }
+  :unresolved-symbol
   {:exclude
    [instaparse.core/transform
     (clojure.core.logic/fresh)

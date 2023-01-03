@@ -1,23 +1,22 @@
 (ns metabase.api.app
   (:require
-    [clojure.string :as str]
-    [clojure.walk :as walk]
-    [compojure.core :refer [POST PUT]]
-    [medley.core :as m]
-    [metabase.actions :as actions]
-    [metabase.api.card :as api.card]
-    [metabase.api.collection :as api.collection]
-    [metabase.api.common :as api]
-    [metabase.mbql.schema :as mbql.s]
-    [metabase.models :refer [App Collection Dashboard ModelAction Table]]
-    [metabase.models.collection :as collection]
-    [metabase.models.dashboard :as dashboard]
-    [metabase.util :as u]
-    [metabase.util.i18n :as i18n]
-    [metabase.util.schema :as su]
-    [schema.core :as s]
-    [toucan.db :as db]
-    [toucan.hydrate :refer [hydrate]]))
+   [clojure.walk :as walk]
+   [compojure.core :refer [POST PUT]]
+   [medley.core :as m]
+   [metabase.actions :as actions]
+   [metabase.api.card :as api.card]
+   [metabase.api.collection :as api.collection]
+   [metabase.api.common :as api]
+   [metabase.mbql.schema :as mbql.s]
+   [metabase.models :refer [App Collection Dashboard ModelAction Table]]
+   [metabase.models.collection :as collection]
+   [metabase.models.dashboard :as dashboard]
+   [metabase.util :as u]
+   [metabase.util.i18n :as i18n]
+   [metabase.util.schema :as su]
+   [schema.core :as s]
+   [toucan.db :as db]
+   [toucan.hydrate :refer [hydrate]]))
 
 (defn- hydrate-details
   [apps & additional-features]
@@ -171,7 +170,7 @@
                         order-by-field-id (->> table
                                                :fields
                                                (keep (fn [field]
-                                                       (let [field-name (str/lower-case (:name field))]
+                                                       (let [field-name (u/lower-case-en (:name field))]
                                                          (cond
                                                            (= field-name "updated_at")
                                                            {:priority 0 :field-id (:id field)}

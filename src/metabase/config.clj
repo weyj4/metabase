@@ -4,7 +4,8 @@
             [clojure.string :as str]
             [clojure.tools.logging :as log]
             [environ.core :as env]
-            [metabase.plugins.classloader :as classloader])
+            [metabase.plugins.classloader :as classloader]
+            [metabase.util :as u])
   (:import clojure.lang.Keyword
            java.util.UUID))
 
@@ -18,7 +19,7 @@
 
 (def ^Boolean is-windows?
   "Are we running on a Windows machine?"
-  (str/includes? (str/lower-case (System/getProperty "os.name")) "win"))
+  (str/includes? (u/lower-case-en (System/getProperty "os.name")) "win"))
 
 (def ^:private app-defaults
   "Global application defaults"
@@ -121,7 +122,7 @@
 
 (defn- mb-session-cookie-samesite*
   []
-  (let [same-site (str/lower-case (config-str :mb-session-cookie-samesite))]
+  (let [same-site (u/lower-case-en (config-str :mb-session-cookie-samesite))]
     (when-not (#{"none", "lax", "strict"} same-site)
       (throw (ex-info "Invalid value for MB_COOKIE_SAMESITE" {:mb-session-cookie-samesite same-site})))
     (keyword same-site)))

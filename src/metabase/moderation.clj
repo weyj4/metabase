@@ -1,6 +1,5 @@
 (ns metabase.moderation
-  (:require [clojure.string :as str]
-            [medley.core :as m]
+  (:require [medley.core :as m]
             [metabase.util :as u]
             [schema.core :as s]
             [toucan.db :as db]))
@@ -19,7 +18,7 @@
 (defn- object->type
   "Convert a moderated item instance to the keyword stored in the database"
   [moderated-item]
-  (str/lower-case (name moderated-item)))
+  (u/lower-case-en (name moderated-item)))
 
 (defn moderation-reviews-for-items
   "Hydrate moderation reviews onto a seq of items. All are cards or the nils that end up here on text dashboard

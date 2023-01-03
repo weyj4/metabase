@@ -1,7 +1,6 @@
 (ns metabase.util.password
   "Utility functions for checking passwords against hashes and for making sure passwords match complexity requirements."
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
             [metabase.config :as config]
             [metabase.util :as u])
   (:import org.mindrot.jbcrypt.BCrypt))
@@ -74,7 +73,7 @@
   (with-open [is (.openStream common-passwords-url)
               reader (java.io.BufferedReader. (java.io.InputStreamReader. is))]
     (not-any?
-      (partial = (str/lower-case password))
+      (partial = (u/lower-case-en password))
       (iterator-seq (.. reader lines iterator)))))
 
 (defn is-valid?
