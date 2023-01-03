@@ -33,10 +33,26 @@
  [shared.u
   qualified-name])
 
+(defn lower-case-en
+  "Locale-agnostic version of `clojure.string/lower-case`.
+  `clojure.string/lower-case` uses the default locale in conversions, turning
+  `ID` into `ıd`, in the Turkish locale. This function always uses the
+  `Locale/US` locale."
+  [^CharSequence s]
+  (.. s toString (toLowerCase (Locale/US))))
+
+(defn upper-case-en
+  "Locale-agnostic version of `clojure.string/upper-case`.
+  `clojure.string/upper-case` uses the default locale in conversions, turning
+  `id` into `İD`, in the Turkish locale. This function always uses the
+  `Locale/US` locale."
+  [^CharSequence s]
+  (.. s toString (toUpperCase (Locale/US))))
+
 (defn screaming-snake-case
   "Turns `strings-that-look-like-deafening-vipers` into `STRINGS_THAT_LOOK_LIKE_DEAFENING_VIPERS`."
   [s]
-  (str/upper-case (str/replace s "-" "_")))
+  (upper-case-en (str/replace s "-" "_")))
 
 (defn add-period
   "Fixes strings that don't terminate in a period; also accounts for strings
@@ -55,25 +71,9 @@
   to retain case-sensitive capitalization, e.g., PostgreSQL."
   [s]
   (if (< (count s) 2)
-    (str/upper-case s)
-    (str (str/upper-case (subs s 0 1))
+    (upper-case-en s)
+    (str (upper-case-en (subs s 0 1))
          (subs s 1))))
-
-(defn lower-case-en
-  "Locale-agnostic version of `clojure.string/lower-case`.
-  `clojure.string/lower-case` uses the default locale in conversions, turning
-  `ID` into `ıd`, in the Turkish locale. This function always uses the
-  `Locale/US` locale."
-  [^CharSequence s]
-  (.. s toString (toLowerCase (Locale/US))))
-
-(defn upper-case-en
-  "Locale-agnostic version of `clojure.string/upper-case`.
-  `clojure.string/upper-case` uses the default locale in conversions, turning
-  `id` into `İD`, in the Turkish locale. This function always uses the
-  `Locale/US` locale."
-  [^CharSequence s]
-  (.. s toString (toUpperCase (Locale/US))))
 
 (defn format-bytes
   "Nicely format `num-bytes` as kilobytes/megabytes/etc.
@@ -420,7 +420,7 @@
    (slugify s {}))
   (^String [s {:keys [max-length unicode?]}]
    (when (seq s)
-     (let [slug (str/join (for [c (remove-diacritical-marks (str/lower-case s))]
+     (let [slug (str/join (for [c (remove-diacritical-marks (lower-case-en s))]
                             (slugify-char c (not unicode?))))]
        (if max-length
          (str/join (take max-length slug))
