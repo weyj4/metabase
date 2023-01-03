@@ -10,6 +10,7 @@
               [metabase.mbql.util.match :as mbql.match]
               [metabase.models.dispatch :as models.dispatch]
               [metabase.shared.util.i18n :as i18n]
+              [metabase.util :as u]
               metabase.util.i18n
               [potemkin :as p]
               [schema.core :as s])]
@@ -33,7 +34,7 @@
   keyword."
   [token :- schema.helpers/KeywordOrString]
   (-> (qualified-name token)
-      str/lower-case
+      u/lower-case-en
       (str/replace #"_" "-")
       keyword))
 
@@ -494,7 +495,7 @@
   default aliases are unique by `[id name-key-fn]`. Specify something custom here if you want to make the unique
   aliases unique by some other value, for example to make them unique without regards to case:
 
-    (let [f (unique-name-generator :name-key-fn str/lower-case)]
+    (let [f (unique-name-generator :name-key-fn u/lower-case-en)]
       [(f \"x\")
        (f \"X\")
        (f \"X\")])

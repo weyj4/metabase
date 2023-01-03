@@ -260,7 +260,7 @@
 (defmethod sql-jdbc.execute/read-column [:vertica Types/TIMESTAMP]
   [_ _ ^ResultSet rs ^ResultSetMetaData rsmeta ^Integer i]
   (when-let [s (.getString rs i)]
-    (let [has-timezone? (= (str/lower-case (.getColumnTypeName rsmeta i)) "timestamptz")
+    (let [has-timezone? (= (u/lower-case-en (.getColumnTypeName rsmeta i)) "timestamptz")
           t             (u.date/parse s (when has-timezone? "UTC"))]
       (log/tracef "(.getString rs %d) [TIME_WITH_TIMEZONE] -> %s -> %s" i s t)
       t)))

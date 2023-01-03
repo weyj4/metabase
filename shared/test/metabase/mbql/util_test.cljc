@@ -1,8 +1,8 @@
 (ns metabase.mbql.util-test
-  (:require [clojure.string :as str]
-            [clojure.test :as t]
+  (:require [clojure.test :as t]
             [metabase.mbql.util :as mbql.u]
-            metabase.types))
+            metabase.types
+            [metabase.util :as u]))
 
 (comment metabase.types/keep-me)
 
@@ -641,7 +641,7 @@
 
   (t/testing "options"
     (t/testing :name-key-fn
-      (let [f (mbql.u/unique-name-generator :name-key-fn str/lower-case)]
+      (let [f (mbql.u/unique-name-generator :name-key-fn u/lower-case-en)]
         (t/is (= ["x" "X_2" "X_3"]
                  (map f ["x" "X" "X"])))))
 
