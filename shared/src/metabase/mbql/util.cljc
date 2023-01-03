@@ -10,7 +10,6 @@
               [metabase.mbql.util.match :as mbql.match]
               [metabase.models.dispatch :as models.dispatch]
               [metabase.shared.util.i18n :as i18n]
-              [metabase.util :as u]
               metabase.util.i18n
               [potemkin :as p]
               [schema.core :as s])]
@@ -35,7 +34,7 @@
   keyword."
   [token :- schema.helpers/KeywordOrString]
   (-> (qualified-name token)
-      u/lower-case-en
+      str/lower-case
       (str/replace #"_" "-")
       keyword))
 
