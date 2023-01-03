@@ -2406,7 +2406,7 @@
                 new-row (-> (mt/user-http-request :crowberto :post 200 execute-path
                                                   {:parameters {"name" "Birds"}})
                             :created-row
-                            (update-keys (comp keyword str/lower-case name)))]
+                            (update-keys (comp keyword u/lower-case-en name)))]
             (testing "Should be able to insert"
               (is (pos? (:id new-row)))
               (is (partial= {:name "Birds"}

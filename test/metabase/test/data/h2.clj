@@ -1,7 +1,6 @@
 (ns metabase.test.data.h2
   "Code for creating / destroying an H2 database from a `DatabaseDefinition`."
-  (:require [clojure.string :as str]
-            [metabase.db :as mdb]
+  (:require [metabase.db :as mdb]
             [metabase.db.spec :as mdb.spec]
             [metabase.driver.ddl.interface :as ddl.i]
             [metabase.driver.sql.util :as sql.u]
@@ -83,7 +82,7 @@
 
 (defmethod ddl.i/format-name :h2
   [_ s]
-  (str/upper-case s))
+  (u/upper-case-en s))
 
 (defmethod ddl/drop-db-ddl-statements :h2
   [_driver _dbdef & _options]
