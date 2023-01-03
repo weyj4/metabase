@@ -3,6 +3,7 @@
             [clojure.java.io :as io]
             [clojure.string :as str]
             [i18n.common :as i18n]
+            [metabase.util :as mu]
             [metabuild-common.core :as u])
   (:import [java.io FileOutputStream OutputStreamWriter]
            java.nio.charset.StandardCharsets))
@@ -37,7 +38,7 @@
   [po-contents]
   {:charset      "utf-8"
    :headers      (into {} (for [[k v] (:headers po-contents)]
-                            [(str/lower-case k) v]))
+                            [(mu/lower-case-en k) v]))
    :translations (->translations-map (:messages po-contents))})
 
 (defn- i18n-map [locale]

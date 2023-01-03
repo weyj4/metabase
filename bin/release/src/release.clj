@@ -2,6 +2,7 @@
   (:require [clojure.string :as str]
             [environ.core :as env]
             [flatland.ordered.map :as ordered-map]
+            [metabase.util :as mu]
             [metabuild-common.core :as u]
             [release
              [check-prereqs :as check-prereqs]
@@ -28,7 +29,7 @@
 (defn- do-steps! [steps]
   (slack/post-message! "%s started building %s `v%s` from branch `%s`..."
                        (env/env :user)
-                       (str/upper-case (name (c/edition)))
+                       (mu/upper-case-en (name (c/edition)))
                        (c/version)
                        (c/branch))
   (doseq [step-name steps]

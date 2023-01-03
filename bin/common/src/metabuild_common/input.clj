@@ -1,7 +1,8 @@
 (ns metabuild-common.input
   (:require [clojure.string :as str]
             [environ.core :as env]
-            [metabuild-common.output :as out]))
+            [metabuild-common.output :as out]
+            [metabuild.util :as u]))
 
 (defn interactive?
   "Whether we're running these scripts interactively, and can prompt the user for input. By default, this is
@@ -52,7 +53,7 @@
                            [:c :e])
     ;-> :c"
   [prompt letters & options]
-  (let [letter-strs (map #(str/upper-case (if (keyword? %)
+  (let [letter-strs (map #(u/upper-case-en (if (keyword? %)
                                             (name %)
                                             (str %)))
                          letters)
@@ -60,11 +61,11 @@
                      read-line-with-prompt
                      (format "%s [%s]" prompt (str/join "/" letter-strs))
                      :validator (fn [line]
-                                  (when-not (contains? (set letter-strs) (str/trim (str/upper-case line)))
+                                  (when-not (contains? (set letter-strs) (str/trim (u/upper-case-en line)))
                                     (format "Please enter %s" (str/join " or " (map pr-str letter-strs)))))
                      options)]
     (out/safe-println (str/trim letter))
-    (keyword (str/trim (str/lower-case letter)))))
+    (keyword (str/trim (u/lower-case-en letter)))))
 
 (defn yes-or-no-prompt
   "Prompt user to type `Y` or `N`; prompt will repeat until one of those two letters is typed. Returns `true` or `false`

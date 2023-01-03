@@ -1,6 +1,7 @@
 (ns release.check-prereqs
   (:require [clojure.string :as str]
             [environ.core :as env]
+            [metabase.util :as mu]
             [metabuild-common.core :as u]))
 
 (def ^:private required-commands
@@ -28,7 +29,7 @@
 (defn- check-for-required-env-vars []
   (u/step "Verify required env vars are set"
     (doseq [env-var required-env-vars
-            :let    [actual-env-var (str/upper-case (str/replace (name env-var) #"-" "_"))]]
+            :let    [actual-env-var (mu/upper-case-en (str/replace (name env-var) #"-" "_"))]]
       (u/step (format "Verify env var %s is set" actual-env-var)
         (if (get env/env env-var)
           (u/announce "Found %s" actual-env-var)
