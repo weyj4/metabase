@@ -20,6 +20,7 @@
               [metabase.mbql.schema.helpers :as schema.helpers]
               [metabase.mbql.util.match :as mbql.match]
               [metabase.shared.util.i18n :as i18n]
+              [metabase.util :as u]
               [schema.core :as s])]))
 
 (defn qualified-name

@@ -1,8 +1,8 @@
 (ns metabase-enterprise.sandbox.api.table-test
-  (:require [clojure.string :as str]
-            [clojure.test :refer :all]
+  (:require [clojure.test :refer :all]
             [metabase-enterprise.sandbox.test-util :as mt.tu]
-            [metabase.test :as mt]))
+            [metabase.test :as mt]
+            [metabase.util :as u]))
 
 (def ^:private all-columns
   #{"CATEGORY_ID" "ID" "LATITUDE" "LONGITUDE" "NAME" "PRICE"})
@@ -14,7 +14,7 @@
                                                     test-user :get 200
                                                     (format "table/%d/query_metadata" (mt/id :venues)))]
                 (if (seq fields)
-                  (set (map (comp str/upper-case :name) fields))
+                  (set (map (comp u/upper-case-en :name) fields))
                   response)))]
       (mt/with-gtaps {:gtaps      {:venues
                                    {:remappings {:cat [:variable [:field (mt/id :venues :category_id) nil]]}
