@@ -2,7 +2,6 @@
   "Utility functions for comparing the contents of two H2 DBs, for testing the `load-from-h2 and `dump-to-h2` commands."
   (:require [clojure.data :as data]
             [clojure.java.jdbc :as jdbc]
-            [clojure.string :as str]
             [clojure.tools.logging :as log]
             metabase.db.jdbc-protocols
             [metabase.util :as u]))

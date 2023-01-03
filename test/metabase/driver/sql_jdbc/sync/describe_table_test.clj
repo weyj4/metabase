@@ -1,6 +1,5 @@
 (ns metabase.driver.sql-jdbc.sync.describe-table-test
   (:require [clojure.java.jdbc :as jdbc]
-            [clojure.string :as str]
             [clojure.test :refer :all]
             [metabase.driver :as driver]
             [metabase.driver.sql-jdbc.sync.describe-table :as sql-jdbc.describe-table]

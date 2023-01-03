@@ -13,6 +13,7 @@
             [metabase.test.data.sql-jdbc.load-data :as load-data]
             [metabase.test.data.sql-jdbc.spec :as spec]
             [metabase.test.data.sql.ddl :as ddl]
+            [metabase.util :as u]
             [toucan.db :as db]))
 
 (sql-jdbc.tx/add-test-extensions! :h2)
